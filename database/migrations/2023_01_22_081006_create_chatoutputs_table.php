@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('chatoutputs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreign_Id("input_id")->references('id')->on('chatinputs')->onDelete('cascade');
+            $table->foreignId("input_id")->references('id')->on('chatinputs')->cascadeOnDelete();
         });
     }
 
