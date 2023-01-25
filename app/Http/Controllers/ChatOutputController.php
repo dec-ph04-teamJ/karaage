@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Group;
 use Auth;
+use App\Models\User;
 
 class ChatOutputController extends Controller
 {
@@ -15,7 +16,7 @@ class ChatOutputController extends Controller
      */
     public function index()
     {
-        $group_id=1;
+        $group_id=2;
         //これはinputから送られてくる情報
         $group=Group::query()
         ->find($group_id);
@@ -56,7 +57,12 @@ class ChatOutputController extends Controller
      */
     public function show($id)
     {
-        //
+        $chat_inputs=User::query()
+        ->find(Auth::user()->id)
+        ->Get_User_Contents()
+        ->orderBy('created_at','desc')
+        ->get();
+        return view("chatoutput.show",compact("chat_inputs"));
     }
 
     /**

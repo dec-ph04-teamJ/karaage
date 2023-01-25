@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('Tweet Index') }}
+      {{ __('Chat Output') }}
     </h2>
   </x-slot>
 
@@ -16,11 +16,26 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($group_users as $group_user)
               <tr class="hover:bg-grey-lighter">
                 <td class="py-4 px-6 border-b border-grey-light">
-                  <h3 class="text-left font-bold text-lg text-grey-dark">{{$group_user->name}}</h3>
+                  <a href="{{route('chatoutput.show',Auth::user()->id)}}">
+                    <h3 class="text-left font-bold text-lg text-grey-dark">{{Auth::user()->name}}</h3>
+                  </a>
                   <div class="flex">
+                  </div>
+                </td>
+              </tr>
+              @foreach ($group_users as $group_user)
+              @if ($group_user->id==Auth::user()->id)
+                @continue
+              @endif
+              <tr class="hover:bg-grey-lighter">
+                <td class="py-4 px-6 border-b border-grey-light">
+                  <a href="{{route('chatoutput.show',$group_user->id)}}">
+                  <h3 class="text-left font-bold text-lg text-grey-dark">{{$group_user->name}}</h3>
+                  </a>
+                  <div class="flex justify-end inline-block">
+                    a
                   </div>
                 </td>
               </tr>
