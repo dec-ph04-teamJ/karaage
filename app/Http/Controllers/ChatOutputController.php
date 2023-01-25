@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Group;
 use Auth;
 use App\Models\User;
+use App\Models\Chatoutput;
 
 class ChatOutputController extends Controller
 {
@@ -16,7 +17,7 @@ class ChatOutputController extends Controller
      */
     public function index()
     {
-        $group_id=2;
+        $group_id=1;
         //これはinputから送られてくる情報
         $group=Group::query()
         ->find($group_id);
@@ -57,12 +58,22 @@ class ChatOutputController extends Controller
      */
     public function show($id)
     {
-        $chat_inputs=User::query()
-        ->find(Auth::user()->id)
+        $user_inputs=User::query()
+        ->find($id)
+        #同じチームの他の人のメッセージも見ることができる。
         ->Get_User_Contents()
         ->orderBy('created_at','desc')
         ->get();
-        return view("chatoutput.show",compact("chat_inputs"));
+        #userが入力しているinput情報を取得
+
+        foreach($user_inputs as $user_input){
+            $user_outputs_id[]=$user_input->id;
+            #input情報のidを取得
+        }
+        $user_outputs=Chatoutput::Get_Chat_Score($user_outputs_id);
+        $count_data=count($user_outputs);
+        #配列の長さを取得.show.bladeのfor文で使う
+        return view("chatoutput.show",compact("user_outputs","user_inputs","count_data"));
     }
 
     /**

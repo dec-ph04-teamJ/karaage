@@ -21,7 +21,8 @@
                   <a href="{{route('chatoutput.show',Auth::user()->id)}}">
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{Auth::user()->name}}</h3>
                   </a>
-                  <div class="flex">
+                   <div class="flex justify-end inline-block">
+                    a
                   </div>
                 </td>
               </tr>
