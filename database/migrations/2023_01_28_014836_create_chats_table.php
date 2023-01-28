@@ -14,8 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('chats', function (Blueprint $table) {
-            $table->id("user_id")->constrained()->cascadeOnDelete();
+            $table->id();
             $table->text("content");
+            $table->foreignId("user_id")->constrained()->cascadeOnDelete();
             $table->foreignId('group_id')->constrained()->cascadeOnDelete();
             $table->unique(['group_id', 'user_id']);
             $table->timestamps();
