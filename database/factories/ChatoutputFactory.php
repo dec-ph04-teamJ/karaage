@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Chatoutput>
  */
-class GroupFactory extends Factory
+class ChatoutputFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,8 @@ class GroupFactory extends Factory
     {
         return [
             //
-            'name' => $this->faker->unique()->country(), // とりあえず国名でグループ作成
+            'score'=>$this->faker->numberBetween(1, 100),
+            'input_id' =>$this->faker->unique()->numberBetween(1,40),
         ];
     }
 }
