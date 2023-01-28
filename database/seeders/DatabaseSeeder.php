@@ -14,11 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Group tableとかにダミーデータ
+        $this->call([GroupsSeeder::class]);
+        $this->call([ChatinputsSeeder::class]);
+        $this->call([ChatoutputsSeeder::class]);
+        $this->call([User_groupSeeder::class]);
     }
 }
