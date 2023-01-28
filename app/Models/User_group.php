@@ -9,4 +9,6 @@ class User_group extends Model
 {
     use HasFactory;
     
+    // デフォルトだとクラス名を複数形のスネークケースにしたもの(user_groups)がテーブル名になる？
+    protected $table = 'user_group';
 }
