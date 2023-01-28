@@ -15,8 +15,8 @@ class ChatController extends Controller
      */
     public function index()
     {
-        $comments = Chat::get();
-        return view('home', ['comments' => $comments]);
+        $chats = Chat::get();
+        return view('chat.index', compact('chats'));
     }
 
     /**
@@ -38,12 +38,11 @@ class ChatController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $chat = $request->input('chat');
+        $chats = $request->input('chat');
         Chat::create([
-            'content'=>$chat->content
-            
+            'content'=>$chats->content
         ]);
-        return redirect()->route('chat');
+        return redirect()->route('chat.index');
     }
 
     /**
@@ -98,8 +97,8 @@ class ChatController extends Controller
 
     public function getData()
     {
-        $chat = Chat::orderBy('created_at', 'desc')->get();
-        $json = ["chat" => $chat];
+        $chats = Chat::orderBy('created_at', 'desc')->get();
+        $json = ["chat" => $chats];
         return response()->json($json);
     }
 }

@@ -32,7 +32,7 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                @yield('comment')
             </main>
         </div>
     </body>
