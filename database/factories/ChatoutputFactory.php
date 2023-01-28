@@ -19,7 +19,8 @@ class ChatoutputFactory extends Factory
         return [
             //
             'score'=>$this->faker->numberBetween(1, 99),
-            'input_id' =>$this->faker->unique()->numberBetween(1,40),
+            'input_id'=>$this->faker->unique()->numberBetween(1,40),
+            'user_id'=>$this->faker->numberBetween(1,10),
         ];
     }
 }
