@@ -16,27 +16,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="hover:bg-grey-lighter">
-                <td class="py-4 px-6 border-b border-grey-light">
-                  <a href="{{route('chatoutput.show',Auth::user()->id)}}">
-                    <h3 class="text-left font-bold text-lg text-grey-dark">{{Auth::user()->name}}</h3>
-                  </a>
-                   <div class="flex justify-end inline-block">
-                    a
-                  </div>
-                </td>
-              </tr>
               @foreach ($group_users as $group_user)
-              @if ($group_user->id==Auth::user()->id)
-                @continue
-              @endif
               <tr class="hover:bg-grey-lighter">
                 <td class="py-4 px-6 border-b border-grey-light">
                   <a href="{{route('chatoutput.show',$group_user->id)}}">
                   <h3 class="text-left font-bold text-lg text-grey-dark">{{$group_user->name}}</h3>
                   </a>
                   <div class="flex justify-end inline-block">
-                    a
+                    {{$users_score_lis[$loop->index]}}
                   </div>
                 </td>
               </tr>
