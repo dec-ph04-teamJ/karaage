@@ -88,9 +88,11 @@ class ChatOutputController extends Controller
         #同じチームの他の人のメッセージも見ることができる。
         #ログインuserが入力しているinput情報を取得
 
+        $user_outputs_id=array();
         foreach($user_inputs as $user_input){
             $user_outputs_id[]=$user_input->id;
         }
+        #user_inputsが空の場合はfor文は回らない。そのためforeach内で定義された変数は未定義になる。
         #71行目のgetで取得した値はforeachによってループして取得する。
         #input情報のidを取得。$user_outputs_idという配列に保存
 
