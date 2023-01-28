@@ -11,7 +11,7 @@
 
             <!-- Page Content -->
             <main>
-                @include('components.index')
+                @include('components.content')
                  {{-- $slot  --}}
             </main> 
             {{-- <main class="py-4">
