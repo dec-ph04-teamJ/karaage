@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/store', [ChatController::class, 'store'])->name('chat.store');
+    Route::get('/result/ajax', [ChatController::class, 'getData'])->name('chat.getData');
 });
 
 require __DIR__.'/auth.php';

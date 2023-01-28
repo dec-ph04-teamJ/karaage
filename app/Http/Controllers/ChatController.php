@@ -95,4 +95,11 @@ class ChatController extends Controller
     {
         $this->middleware('auth');
     }
+
+    public function getData()
+    {
+        $chat = Chat::orderBy('created_at', 'desc')->get();
+        $json = ["chat" => $chat];
+        return response()->json($json);
+    }
 }
