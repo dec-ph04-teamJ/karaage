@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use App\Models\Chatinput;
+
 class ChatinputsSeeder extends Seeder
 {
     /**
@@ -15,5 +17,6 @@ class ChatinputsSeeder extends Seeder
     public function run()
     {
         //
+        Chatinput::factory()->count(30)->create();
     }
 }

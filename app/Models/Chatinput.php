@@ -10,7 +10,7 @@ class Chatinput extends Model
     use HasFactory;
 
     protected $fillable = [
-        ''
+        'sentence'
     ];
 
 
