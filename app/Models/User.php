@@ -45,5 +45,10 @@ class User extends Authenticatable
         return $this->hasMany(Chatinput::class);
     }
 
+    public function Get_Chat_Score_from_Userid(){
+        return $this->hasMany(Chatoutput::class);
+    }
+    #ある特定のユーザーが持つoutput情報を取得できる
+
 
 }
