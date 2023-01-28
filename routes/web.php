@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
-
+use App\Http\Controllers\ChatOutputController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +14,8 @@ use App\Http\Controllers\ChatController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::resource("chatoutput",ChatOutputController::class);
 
 Route::get('/', function () {
     return view('welcome');

@@ -7,7 +7,7 @@
             <div class="card-header">Comment</div>
                 <div class="card-body chat-card">
                     @foreach ($chats as $chat)
-                    @include('components.comment', ['item' => $item])
+                    @include('chat.comment', ['item' => $item])
                     @endforeach
                 </div>
         </div>
