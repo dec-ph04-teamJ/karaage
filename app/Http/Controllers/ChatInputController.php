@@ -6,7 +6,7 @@ use App\Models\Chatinput;
 use Validator;
 use Illuminate\Http\Request;
 
-class ChatController extends Controller
+class ChatInputController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,9 +37,9 @@ class ChatController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $chats = $request->input('sentence');
+        $chatinputs = $request->input('sentence');
         Chatinput::create([
-            'sentence'=>$chats->sentence
+            'sentence'=>$chatinputs->sentence
         ]);
         return redirect()->route('chatoutput.index');
     }
