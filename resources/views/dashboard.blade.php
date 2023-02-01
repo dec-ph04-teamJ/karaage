@@ -13,6 +13,7 @@
                     <a href="{{ route('chatoutput.index') }}">
                         チャット出力画面
                     </a>
+                    {{ __("ログインしました!") }}
                 </div>
             </div>
         </div>

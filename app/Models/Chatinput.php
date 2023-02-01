@@ -12,6 +12,4 @@ class Chatinput extends Model
     protected $fillable = [
         'sentence',
     ];
-
-    
 }
