@@ -22,12 +22,12 @@
               {{ __('Chat') }}
             </x-nav-link>
           </div>
-          {{-- <!-- 結果画面へのリンクを追加 -->
+          <!-- 結果画面へのリンクを追加 -->
           <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
             <x-nav-link :href="route('tweet.create')" :active="request()->routeIs('tweet.create')">
               {{ __('Create') }}
             </x-nav-link>
-          </div> --}}
+          </div>
         </div>
   
         <!-- Settings Dropdown -->

@@ -39,7 +39,7 @@ class ChatController extends Controller
         $user = Auth::user();
         $chats = $request->input('sentence');
         Chatinput::create([
-            'sentence'=>$chats->sentence;
+            'sentence'=>$chats->sentence
         ]);
         return redirect()->route('chatoutput.index');
     }

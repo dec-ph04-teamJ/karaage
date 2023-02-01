@@ -16,7 +16,6 @@
             {{-- <main class="py-4">
                 @yield('chat.content')
             </main> --}}
-        </div>
-    @yield('js')    
+        </div>  
     </body>
 </html>
