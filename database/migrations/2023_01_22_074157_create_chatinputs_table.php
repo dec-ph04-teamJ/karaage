@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('chatinputs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("user_id")->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId("group_id")->references('id')->on('groups')->cascadeOnDelete();      
+            $table->foreignId("user_id")->references('id')->on('users')->cascadeOnDelete(); 
             $table->text("sentence");
         });
     }

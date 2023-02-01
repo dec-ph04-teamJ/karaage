@@ -31,7 +31,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    Route::get('/result/ajax', [ChatController::class, 'getData'])->name('chat.getData');
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     Route::post('/store', [ChatController::class, 'store'])->name('chat.store');
     

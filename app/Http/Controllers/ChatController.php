@@ -15,8 +15,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-        $chats = Chat::get();
-        return view('chat.index', compact('chats'));
+        
     }
 
     /**
@@ -38,11 +37,11 @@ class ChatController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $chats = $request->input('chat');
+        $chats = $request->input('sentence');
         Chat::create([
-            'content'=>$chats->content
+            'sentence'=>$chats->sentence;
         ]);
-        return redirect()->route('chat.index');
+        return redirect()->route('chatoutput.index');
     }
 
     /**
@@ -95,10 +94,4 @@ class ChatController extends Controller
         $this->middleware('auth');
     }
 
-    public function getData()
-    {
-        $chats = Chat::orderBy('created_at', 'desc')->get();
-        $json = ["chat" => $chats];
-        return response()->json($json);
-    }
 }

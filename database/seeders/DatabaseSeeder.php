@@ -23,9 +23,7 @@ class DatabaseSeeder extends Seeder
 
         
         // Group tableとかにダミーデータ
-        $this->call([GroupsSeeder::class]);
         $this->call([ChatinputsSeeder::class]);
         $this->call([ChatoutputsSeeder::class]);
-        $this->call([User_groupSeeder::class]);
     }
 }

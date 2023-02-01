@@ -19,7 +19,6 @@ class ChatinputFactory extends Factory
         return [
             //
             'user_id' => $this->faker->numberBetween(1, 10),
-            'group_id' => $this->faker->numberBetween(1, 5),
             'sentence' => $this->faker->realText(20),
         ];
     }
