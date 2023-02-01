@@ -11,8 +11,7 @@
 
             <!-- Page Content -->
             <main>
-                @include('components.content')
-                 {{-- $slot  --}}
+                {{ $slot }}  
             </main> 
             {{-- <main class="py-4">
                 @yield('chat.content')
