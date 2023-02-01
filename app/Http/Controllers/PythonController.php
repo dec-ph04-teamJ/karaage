@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Group;
-use Auth;
-use App\Models\User;
-use App\Models\Chatoutput;
 
-class ChatOutputController extends Controller
+class PythonController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,22 +13,7 @@ class ChatOutputController extends Controller
      */
     public function index()
     {
-        $user=User::query()
-        ->find(Auth::id());
-        $user_inputs=$user
-        ->Get_Chats()
-        ->orderBy('id','asc')
-        ->get();
-        $user_outputs=$user
-        ->Get_Chat_Scores()
-        ->orderBy('input_id','asc')
-        ->get();
-        #inputテーブルのidとoutputテーブルのinput_idが同じになるようにorderbyで並び替える。
-        $count_data=count($user_outputs);
-        #Get_Chat_Scoreの関数は配列をわたす
-        #配列の長さを取得.show.bladeのfor文で使う
-
-        return view("chatoutput.index",compact("count_data","user_inputs","user_outputs"));
+        //
     }
 
     /**
@@ -64,7 +45,7 @@ class ChatOutputController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
