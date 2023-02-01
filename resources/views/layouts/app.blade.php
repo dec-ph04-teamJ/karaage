@@ -13,9 +13,6 @@
             <main>
                 {{ $slot }}  
             </main> 
-            {{-- <main class="py-4">
-                @yield('chat.content')
-            </main> --}}
         </div>  
     </body>
 </html>
