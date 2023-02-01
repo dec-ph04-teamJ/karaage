@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chat;
+use App\Models\Chatinput;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -38,7 +38,7 @@ class ChatController extends Controller
     {
         $user = Auth::user();
         $chats = $request->input('sentence');
-        Chat::create([
+        Chatinput::create([
             'sentence'=>$chats->sentence;
         ]);
         return redirect()->route('chatoutput.index');
