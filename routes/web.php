@@ -16,6 +16,7 @@ use App\Http\Controllers\ChatOutputController;
 */
 
 Route::resource("chatoutput",ChatOutputController::class);
+Route::resource("python", PythonController::class);
 
 Route::get('/', function () {
     return view('welcome');
