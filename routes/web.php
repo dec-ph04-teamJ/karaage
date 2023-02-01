@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Route::get('/chat', [ChatInputController::class, 'index'])->name('chat.index');
-    Route::post('/store', [ChatInputController::class, 'store'])->name('chat.store');
+    Route::post('/store', [ChatInputController::class, 'store'])->name('chatinput.store');
     
 });
 
