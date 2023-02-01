@@ -41,14 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function Get_User_Contents(){
+    public function Get_Chats(){
         return $this->hasMany(Chatinput::class);
     }
-
-    public function Get_Chat_Score_from_Userid(){
+    #ある特定のinput情報を取得できる。
+    public function Get_Chat_Scores(){
         return $this->hasMany(Chatoutput::class);
     }
-    #ある特定のユーザーが持つoutput情報を取得できる
-
-
+    #ある特定のユーザーが持つoutput情報を取得できる。
 }

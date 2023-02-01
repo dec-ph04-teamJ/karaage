@@ -13,5 +13,5 @@ class Chatinput extends Model
         'sentence',
     ];
 
-
+    
 }
