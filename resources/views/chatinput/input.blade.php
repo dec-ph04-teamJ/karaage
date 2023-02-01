@@ -15,7 +15,7 @@
               @csrf
               <div class="flex flex-col mb-4">
                 <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="sentence"></label>
-                <input class="border py-2 px-3 text-grey-darkest" type="text" name="sentence" id="sentene">
+                <input class="border py-2 px-3 text-grey-darkest" type="text" name="sentence" id="sentence">
               </div>
               <button type="submit" class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
                 送信
