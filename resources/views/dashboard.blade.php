@@ -13,6 +13,9 @@
                     <a href="{{ route('chatoutput.index') }}">
                         チャット出力画面
                     </a>
+                    <a href="{{ route('python.index') }}">
+                        python実行
+                    </a>
                 </div>
             </div>
         </div>
