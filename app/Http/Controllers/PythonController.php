@@ -13,7 +13,7 @@ class PythonController extends Controller
      */
     public function index()
     {
-        $str_to_python="こんにちは";
+        $str_to_python="ぜったいやろうよ";
         $pythonPath =  "../app/Python/";
         $command = "python3 ".$pythonPath."test.py 2>error.log {$str_to_python}";
         // コマンドを実行
