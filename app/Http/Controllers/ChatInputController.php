@@ -58,7 +58,6 @@ class ChatInputController extends Controller
         // コマンドを実行
         exec($command, $outputs, $return);
 
-
         $keigo_lis=[];
         $outputs_keigo=explode("'",$outputs[1]);
         $outputs_keigo_count=count($outputs_keigo);
