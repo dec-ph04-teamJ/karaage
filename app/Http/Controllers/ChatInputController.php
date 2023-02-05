@@ -7,6 +7,7 @@ use App\Models\Chatinput;
 use App\Models\Chatoutput;
 use App\Models\User;
 use Auth;
+use App\Models\Keigo;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 // use App\Controllers\ChatInputController;
@@ -74,22 +75,22 @@ class ChatInputController extends Controller
             'input_id' => $input_id,
             'user_id' => Auth::user()->id,
             "score" => (float) $outputs[0],
-            "kanji_rate"=>$outputs[2],
-            "emoji_rate"=>$outputs[4],
+            'kanji_rate' => (float) $outputs[2],
+            'emoji_rate' => (float) $outputs[4],
         ]);
         #outputテーブルに保存。今入力した人のoutput_idを取得
 
 
         $output_id=Chatoutput::getAllOrderByUpdated_at(Auth::user()->id)->first()->id;
-        foreach($keigo in $keigo_lis){
+        foreach($keigo_lis as $keigo){
             $result_keigo=Keigo::create([
                 "output_id"=>$output_id,
                 "keigo"=>$keigo,
-            ])
+            ]);
         }
         #敬語テーブルに保存。一文に対して複数ある可能性があるのでfor文で回す。
 
-        return view('chatoutput.show', compact('result_input', 'result_output'));
+        return view('chatoutput.show', compact('result_input', 'result_output',"keigo_lis"));
     }
 
     /**

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('keigos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("output_id")->references('id')->on('chatonputs')->cascadeOnDelete();
+            $table->foreignId("output_id")->references('id')->on('chatoutputs')->cascadeOnDelete();
             $table->string('keigo');
             $table->timestamps();
         });

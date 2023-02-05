@@ -13,7 +13,9 @@ class Chatoutput extends Model
     protected $fillable = [
         'score',
         "user_id",
-        "input_id"
+        "input_id",
+        "kanji_rate",
+        "emoji_rate",
     ];
 /*
     public static function Get_Chat_Score_from_Inputid($input_id_lis){
