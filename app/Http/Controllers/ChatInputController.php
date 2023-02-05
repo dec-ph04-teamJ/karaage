@@ -58,7 +58,6 @@ class ChatInputController extends Controller
         // コマンドを実行
         exec($command, $outputs, $return);
 
-
         $result_output= Chatoutput::create([
             'input_id' => $input_id,
             'user_id' => Auth::user()->id,
