@@ -55,8 +55,8 @@ class ChatInputController extends Controller
         $pythonPath =  "../app/Python/";
         $command = "python3 ".$pythonPath."test.py 2>error.log {$result_input->sentence}";
         exec($command, $outputs, $return);
-        #コマンドを実行
 
+        #コマンドを実行
         $keigo_lis=[];
         $outputs_keigo=explode("'",$outputs[1]);
         $outputs_keigo_count=count($outputs_keigo);
