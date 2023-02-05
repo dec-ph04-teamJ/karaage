@@ -3,7 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatOutputController;
+
+use App\Http\Controllers\ChatInputController;
 use App\Http\Controllers\PythonController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +19,15 @@ use App\Http\Controllers\PythonController;
 */
 
 Route::resource("chatoutput",ChatOutputController::class);
+// Route::resource("chatinput", ChatInputController::class);
+Route::get('/chatinput', function() {
+    return view('chatinput.create');
+})->middleware(['auth', 'verified'])->name('chatinput');
+Route::post('/chatinput', [ChatInputController::class, 'store'])
+->middleware(['auth', 'verified']);
+
 Route::resource("python", PythonController::class);
+
 
 Route::get('/', function () {
     return view('welcome');

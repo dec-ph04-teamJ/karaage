@@ -4,6 +4,7 @@ import MeCab
 import re
 import emoji
 import pickle
+
 args = sys.argv
 
 def str_to_dataframe(test_str):
@@ -44,16 +45,17 @@ def get_feature_value(df):
 
 def get_score(df):
   test_x=df[["漢字の割合","絵文字の割合","敬語の割合"]]
-  with open('"pickleがあるフォルダを指定する".pickle','rb') as f:
+  with open('storage/model.pickle','rb') as f:
     lr= pickle.load(f)
   y_pred_prob=lr.predict_proba(test_x)
   score=y_pred_prob[0][1]*100
   return score
 
-"""
+
 df=str_to_dataframe(args[1])
 df=get_feature_value(df)
 score=get_score(df)
+
 print(score)
-"""
-print(1)
+
+

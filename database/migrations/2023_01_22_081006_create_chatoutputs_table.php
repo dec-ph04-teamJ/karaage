@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId("input_id")->references('id')->on('chatinputs')->cascadeOnDelete();
             $table->foreignId("user_id")->references('id')->on('users')->cascadeOnDelete();
-            $table->float("score",3,1)->nullable();
+            $table->float("score")->nullable();
         });
     }
 

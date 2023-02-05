@@ -3,8 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Chatinput;
+use App\Models\Chatoutput;
+use App\Models\User;
+use Auth;
+// use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+// use App\Controllers\ChatInputController;
 
-class PythonController extends Controller
+
+class ChatInputController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,12 +21,9 @@ class PythonController extends Controller
      */
     public function index()
     {
-        $str_to_python="絶対に許さないです";
-        $pythonPath =  "../app/Python/";
-        $command = "python3 ".$pythonPath."test.py 2>error.log {$str_to_python}";
-        // コマンドを実行
-        exec($command, $outputs, $return);
-        dd($outputs);
+        //
+        // $sentences = Chatinput::getAllOrderByUpdated_at();
+        // return view('chatinput.store', compact('tweets');)
     }
 
     /**
@@ -29,6 +34,7 @@ class PythonController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -40,6 +46,26 @@ class PythonController extends Controller
     public function store(Request $request)
     {
         //
+        
+        $result_input= Chatinput::create([
+            'sentence' => $request->sentence,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        $input_id=Chatinput::getAllOrderByUpdated_at(Auth::user()->id)->first()->id;
+        $pythonPath =  "../app/Python/";
+        $command = "python3 ".$pythonPath."test.py 2>error.log {$result_input->sentence}";
+        // コマンドを実行
+        exec($command, $outputs, $return);
+
+
+        $result_output= Chatoutput::create([
+            'input_id' => $input_id,
+            'user_id' => Auth::user()->id,
+            "score" => (float) $outputs[0],
+        ]);
+        
+        return view('chatoutput.show', compact('result_input', 'result_output'));
     }
 
     /**
