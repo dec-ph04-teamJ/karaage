@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('chatoutputs', function (Blueprint $table) {
+        Schema::create('keigos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("output_id")->references('id')->on('chatonputs')->cascadeOnDelete();
+            $table->string('keigo');
             $table->timestamps();
-            $table->foreignId("input_id")->references('id')->on('chatinputs')->cascadeOnDelete();
-            $table->foreignId("user_id")->references('id')->on('users')->cascadeOnDelete();
-            $table->float("score")->nullable();
-            $table->float("kanji_rate")->nullable();
-            $table->float("emoji_rate")->nullable();
         });
     }
 
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chatoutputs');
+        Schema::dropIfExists('keigos');
     }
 };
