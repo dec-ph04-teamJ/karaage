@@ -14,7 +14,7 @@
           <div class="mb-6">
             <div class="relative overflow-x-auto">
               <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-white border-b border-gray-200 dark:text-gray-400">
                   <tr>
                     <th scope="col" class="px-6 py-3">text</th>
                     <th scope="col" class="px-6 py-3">score</th>
@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                   @for ($count=0;$count<$count_data;$count++)
-                  <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                  <tr class="bg-white border-b border-gray-200">
                     <td class="px-6 py-4">{{$user_inputs[$count]->sentence}}</td>
                     @if(isset($user_outputs[$count]))
                     <td class="px-6 py-4">{{$user_outputs[$count]->score}}</td>
