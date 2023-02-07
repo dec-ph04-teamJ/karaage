@@ -27,7 +27,7 @@
               @endforeach
               @if($result_output->kanji_rate>=0.2)
               <p class="py-2 px-3 text-grey-darkest" id="score">
-                漢字が多すぎます!もっと柔らかくしましょう!
+                漢字が多いです!もっと柔らかくしましょう!
               </p>
               @endif
               @if($result_output->emoji_rate<=0.2)

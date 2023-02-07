@@ -12,19 +12,40 @@
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
           <div class="mb-6">
-            <div class="flex flex-col mb-4">
-              <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">Contents</p>
-              @for ($count=0;$count<$count_data;$count++)
-              <p class="py-2 px-3 text-grey-darkest" id="description">
-                {{$user_inputs[$count]->sentence}}
-              </p>
-              @if(isset($user_outputs[$count]))
-              <div class="flex justify-end inline-block">
-                {{$user_outputs[$count]->score}}
+            <div class="relative overflow-x-auto">
+              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" class="px-6 py-3">text</th>
+                    <th scope="col" class="px-6 py-3">score</th>
+                    <th scope="col" class="px-6 py-3">defalut point</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for ($count=0;$count<$count_data;$count++)
+                  <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <td class="px-6 py-4">{{$user_inputs[$count]->sentence}}</td>
+                    @if(isset($user_outputs[$count]))
+                    <td class="px-6 py-4">{{$user_outputs[$count]->score}}</td>
+                    @endif
+                    <td class="px-6 py-4">
+                      <ul>
+                        @if($user_outputs[$count]->kanji_rate>=0.2)
+                        <li>漢字が多いです!</li>
+                        @endif
+                        @if($user_outputs[$count]->emoji_rate<=0.2)
+                        <li>絵文字が少ないです!</li>
+                        @endif
+                        @foreach($user_outputs_keigo_lis[$count] as $user_output_keigo)
+                        <li>"{{$user_output_keigo->keigo}}"があります。</li>
+                        @endforeach
+                        </ul>
+                    </td>
+                  </tr>
+                  @endfor
+                </tbody>
+              </table>
               </div>
-              @endif
-              @endfor
-            </div>
           </div>
         </div>
       </div>

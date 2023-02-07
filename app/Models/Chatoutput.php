@@ -29,4 +29,5 @@ class Chatoutput extends Model
         return self::where("user_id",$user_id)
         ->orderBy('updated_at', 'desc')->get();
     }
+
 }

@@ -7,6 +7,8 @@ use App\Models\Group;
 use Auth;
 use App\Models\User;
 use App\Models\Chatoutput;
+use App\Models\Keigo;
+
 
 class ChatOutputController extends Controller
 {
@@ -32,7 +34,13 @@ class ChatOutputController extends Controller
         #Get_Chat_Scoreの関数は配列をわたす
         #配列の長さを取得.show.bladeのfor文で使う
 
-        return view("chatoutput.index",compact("count_data","user_inputs","user_outputs"));
+        $user_outputs_keigo_lis=[];
+        foreach($user_outputs as $user_output){
+            $user_outputs_keigo_lis[]=Keigo::Get_Keigo_from_Outputid($user_output->id);
+        }
+        #userの文章ごとの敬語リストが入っている[[一つ目の文章の敬語リスト],[二つ目],[三つ目]]
+
+        return view("chatoutput.index",compact("count_data","user_inputs","user_outputs","user_outputs_keigo_lis"));
     }
 
     /**
