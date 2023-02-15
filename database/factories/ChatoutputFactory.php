@@ -21,6 +21,8 @@ class ChatoutputFactory extends Factory
             'score'=>$this->faker->numberBetween(1, 99),
             'input_id'=>$this->faker->unique()->numberBetween(1,40),
             'user_id'=>$this->faker->numberBetween(1,10),
+            'kanji_rate'=>$this->faker->numberBetween(-1,1),
+            'emoji_rate'=>$this->faker->numberBetween(-1,1),
         ];
     }
 }
