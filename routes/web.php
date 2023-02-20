@@ -6,6 +6,7 @@ use App\Http\Controllers\ChatOutputController;
 
 use App\Http\Controllers\ChatInputController;
 use App\Http\Controllers\PythonController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::post('/chatinput', [ChatInputController::class, 'store'])
 ->middleware(['auth', 'verified']);
 
 Route::resource("python", PythonController::class);
-
+Route::resource('chat', ChatController::class);
 
 Route::get('/', function () {
     return view('welcome');
