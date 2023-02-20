@@ -1,9 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Check your sentence') }}
+        {{ __('chat room') }}
     </h2>
     </x-slot>
+    
+
+    <div class="flex flex-col mb-4">
+        <div class="p-6 bg-white border-b border-gray-200">
+        @foreach ($result as $input)
+            <div> {{$input->sentence}}</div>
+        @endforeach
+        </div>
+    </div>
 
     <div class="py-12">
     <div class="max-w-7xl mx-auto sm:w-8/12 md:w-1/2 lg:w-5/12">
