@@ -21,7 +21,7 @@ use App\Http\Controllers\PythonController;
 Route::resource("chatoutput",ChatOutputController::class);
 // Route::resource("chatinput", ChatInputController::class);
 Route::get('/chatinput', function() {
-    return view('chat.input');
+    return view('chatinput.create');
 })->middleware(['auth', 'verified'])->name('chatinput');
 Route::post('/chatinput', [ChatInputController::class, 'store'])
 ->middleware(['auth', 'verified']);
