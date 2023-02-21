@@ -23,6 +23,7 @@ edit .env
 vendor/bin/sail up -d
 vendor/bin/sail artisan key:generate
 vendor/bin/sail artisan migrate
+vendor/bin/sail root-shell -c 'apt-get install -y python3 python3-pip'
 vendor/bin/sail shell -c 'pip install -r app/python/requirements.txt'
 vendor/bin/sail npm install
 vendor/bin/sail npm run dev
