@@ -30,6 +30,10 @@ Route::post('/chatinput', [ChatInputController::class, 'store'])
 Route::resource("python", PythonController::class);
 Route::resource('chat', ChatController::class);
 
+Route::post('/chat/change_girl_words',
+[ChatController::class, 'change_girl_words'])->middleware(['auth', 'verified'])->name('change_girl_words');
+
+
 Route::get('/', function () {
     return view('welcome');
 });

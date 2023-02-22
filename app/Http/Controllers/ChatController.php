@@ -41,6 +41,15 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
+    $validator = \Validator::make($request->all(), [
+    'sentence' => 'required'
+  ]);
+  // バリデーション:エラー
+  if ($validator->fails()) {
+    return redirect()
+      ->back();
+  }
+
         $result_input= Chatinput::create([
             'sentence' => $request->sentence,
             'user_id' => Auth::user()->id,
@@ -132,4 +141,44 @@ class ChatController extends Controller
     {
         //
     }
+
+    public function change_girl_words(Request $request){
+    $validator = \Validator::make($request->all(), [
+    'sentence' => 'required'
+  ]);
+  // バリデーション:エラー
+  if ($validator->fails()) {
+    return redirect()
+      ->back();
+  }
+        $girl_words_lis=array("思います"=>"思うよ🤔",
+                            "承知しました"=>"OK!!",
+                            "拝見します"=>"見るね！🤗",
+                            "拝見いたします"=>"見るね！🤗",
+                            "拝見しました"=>"見たよ!😚",
+                            "拝見いたしました"=>"見たよ！🤗",
+                            "頂きました"=>"もらったよ!🥰",
+                            "頂きます"=>"もらうね!😃"
+                            "ですよね"=>"だよね😆～",
+                            "お願いいたします"=>"よろしく~😌",
+                            "申し訳ありません"=>"すまん😰",
+                            "失礼しました"=>"ごめんね😔",
+                            "ございます"=>"す"
+                            );
+
+        $word=$request->sentence;
+        $girl_word=$request->sentence;
+        foreach($girl_words_lis as $key=>$value){
+            $girl_word=str_replace($key,$value, $girl_word);
+        }
+        if($word==$girl_word){
+            \Session::flash('girl_flash_message', 'ギャル語に変換できません');
+        }
+        #ギャル語に直すところが長った場合メッセージを出力する
+        return redirect(route("chat.index"))->with([
+            "girl_word"=>$girl_word,
+            "word"=>$word
+        ]);
+    }
+
 }

@@ -46,6 +46,14 @@ class ChatInputController extends Controller
      */
     public function store(Request $request)
     {
+    $validator = \Validator::make($request->all(), [
+    'sentence' => 'required'
+  ]);
+  // バリデーション:エラー
+  if ($validator->fails()) {
+    return redirect()
+      ->back();
+  }
         $result_input= Chatinput::create([
             'sentence' => $request->sentence,
             'user_id' => Auth::user()->id,

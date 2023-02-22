@@ -9,7 +9,9 @@
     <div class="flex flex-col mb-4">
         <div class="p-6 bg-white border-b border-gray-200">
         @foreach ($inputs as $input)
-            <div> {{$input->sentence}}</div>
+        @if($input->user_id==Auth::user()->id)
+            <div>{{$input->sentence}}</div>
+        @endif
         @endforeach
         </div>
     </div>
@@ -22,23 +24,28 @@
                 @csrf
                 <div class="flex flex-col mb-4">
                     <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="sentence">chat入力欄</label>
-                    <input class="border py-2 px-3 text-grey-darkest" type="text" name="sentence" id="sentence">
+                @if(session('word')==session('girl_word'))
+                <input class="border py-2 px-3 text-grey-darkest" type="text" name="sentence" id="sentence" value="{{session('word')}}">
+                    {{session('girl_flash_message')}}
+                @elseif(session('girl_word'))
+                <input class="border py-2 px-3 text-grey-darkest" type="text" name="sentence" id="sentence" value="{{session('girl_word')}}">
+                @endif
+                <!--ギャル誤変換を行った時の処理リダイレクトをしてメッセージが送られた時だけ処理を行う!-->
                 </div>
     
                 <div class="flex flex-row  mb-4">
-                        <button class="text-center w-full py-3 mt-6 font-medium tracking-widest text-black uppercase bg-white shadow-lg focus:outline-none hover:bg-white hover:text-black hover:shadow-none">
-                        <a href="{{route('chatoutput.index')}}">
-                        今までのチャットスコア
-                        </a>
-                        </button>
                     <button type="submit" class="text-center w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
                         送信
+                    </button>
+                    <button type="submit" formaction="{{route('change_girl_words')}}" class="text-center w-full py-3 mt-6 font-medium tracking-widest text-black uppercase bg-white shadow-lg focus:outline-none hover:bg-white hover:text-black hover:shadow-none">
+                        ギャル語変換
                     </button>
                     </form>
                 </div>
             </div>
             </div>
         </div>
+
 </x-app-layout>
 
 
