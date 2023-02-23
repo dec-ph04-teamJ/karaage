@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Chatinput;
 use App\Models\Chatoutput;
 use App\Models\User;
 use Auth;
 use App\Models\Keigo;
-// use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-// use App\Controllers\ChatInputController;
 
-
-class ChatInputController extends Controller
+class ChatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +19,8 @@ class ChatInputController extends Controller
      */
     public function index()
     {
-        //
-        // $sentences = Chatinput::getAllOrderByUpdated_at();
-        // return view('chatinput.store', compact('tweets');)
+        $inputs= DB::table('chatinputs')->get();
+        return view("chat.input",compact("inputs"));
     }
 
     /**
@@ -35,7 +31,6 @@ class ChatInputController extends Controller
     public function create()
     {
         //
-
     }
 
     /**
@@ -54,6 +49,7 @@ class ChatInputController extends Controller
     return redirect()
       ->back();
   }
+
         $result_input= Chatinput::create([
             'sentence' => $request->sentence,
             'user_id' => Auth::user()->id,
@@ -97,8 +93,8 @@ class ChatInputController extends Controller
             ]);
         }
         #敬語テーブルに保存。一文に対して複数ある可能性があるのでfor文で回す。
-
-        return view('chatoutput.show', compact('result_input', 'result_output',"keigo_lis"));
+        $inputs= DB::table('chatinputs')->get();
+        return view("chat.input",compact("inputs"));
     }
 
     /**
@@ -145,4 +141,44 @@ class ChatInputController extends Controller
     {
         //
     }
+
+    public function change_girl_words(Request $request){
+    $validator = \Validator::make($request->all(), [
+    'sentence' => 'required'
+  ]);
+  // バリデーション:エラー
+  if ($validator->fails()) {
+    return redirect()
+      ->back();
+  }
+        $girl_words_lis=array("思います"=>"思うよ🤔",
+                            "承知しました"=>"OK!!😆",
+                            "拝見します"=>"見るね！🤗",
+                            "拝見いたします"=>"見るね！🤗",
+                            "拝見しました"=>"見たよ!😚",
+                            "拝見いたしました"=>"見たよ！🤗",
+                            "頂きました"=>"もらったよ!🥰",
+                            "頂きます"=>"もらうね!😃",
+                            "ですよね"=>"だよね😆～",
+                            "お願いいたします"=>"よろしく~😌",
+                            "申し訳ありません"=>"すまん😰",
+                            "失礼しました"=>"ごめんね😔",
+                            "ございます"=>"す"
+                            );
+
+        $word=$request->sentence;
+        $girl_word=$request->sentence;
+        foreach($girl_words_lis as $key=>$value){
+            $girl_word=str_replace($key,$value, $girl_word);
+        }
+        if($word==$girl_word){
+            \Session::flash('girl_flash_message', 'ギャル語に変換できません');
+        }
+        #ギャル語に直すところが長った場合メッセージを出力する
+        return redirect(route("chat.index"))->with([
+            "girl_word"=>$girl_word,
+            "word"=>$word
+        ]);
+    }
+
 }
