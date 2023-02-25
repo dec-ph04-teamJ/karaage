@@ -60,7 +60,7 @@ class ChatInputController extends Controller
             'user_id' => Auth::user()->id,
         );
 
-        $input_id=Chatinput::getAllOrderByUpdated_at(Auth::user()->id)->first()->id;
+        
         #inputテーブルに保存。今入力した人のinput_idを取得
 
         $pythonPath =  "../app/Python/";
@@ -82,7 +82,6 @@ class ChatInputController extends Controller
 
 
         $result_output= array(
-            'input_id' => $input_id,
             'user_id' => Auth::user()->id,
             "score" => (float) $outputs[0],
             'kanji_rate' => (float) $outputs[2],
@@ -92,10 +91,9 @@ class ChatInputController extends Controller
         #outputテーブルに保存。今入力した人のoutput_idを取得
 
 
-        $output_id=Chatoutput::getAllOrderByUpdated_at(Auth::user()->id)->first()->id;
+        
         foreach($keigo_lis as $keigo){
             $result_keigo=array(
-                "output_id"=>$output_id,
                 "keigo"=>$keigo,
             );
         }
