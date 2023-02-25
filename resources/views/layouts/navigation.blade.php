@@ -13,12 +13,17 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('chatoutput.index')">
-                        {{ __('Chatoutput') }}
+                        {{ __('今までの点数') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('chatinput')">
-                        {{ __('Chatinput') }}
+                        {{ __('事前チェック') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('chat.index')">
+                        {{ __('チャットへ') }}
                     </x-nav-link>
                 </div>
             </div>
