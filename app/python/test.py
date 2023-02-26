@@ -16,7 +16,7 @@ def get_feature_value_and_included_keigo(df):
   keigo_in_str_lis=[]
   keigo_lis=["御","成る","ます","教示","下さる","沙汰","僭越","為さる","頂く","おっしゃる","れる","申す","いらっしゃる",
             "出でる","窺う","参る","御覧","拝見","拝聴","申し伝える","思し召す","存ずる","拝受する","賜わる","召し上がる",
-            "差し上げる","です"]
+            "差し上げる","です","承知"]
   for index,content in zip(df.index,df["内容"]):
     str_amount=len(content)
     #文字列の長さ抽出

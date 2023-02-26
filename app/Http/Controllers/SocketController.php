@@ -10,9 +10,9 @@ use Ratchet\ConnectionInterface;
 
 use App\Models\User;
 
-// use App\Models\Chat;
+use App\Models\Chat;
 
-// use App\Models\Chat_request;
+use App\Models\Chat_request;
 
 use Auth;
 
@@ -368,7 +368,7 @@ class SocketController extends Controller implements MessageComponentInterface
             {
                 //save chat message in mysql
 
-                $chat = new Chat;
+                $chat = new Post;
 
                 $chat->from_user_id = $data->from_user_id;
 
@@ -400,7 +400,8 @@ class SocketController extends Controller implements MessageComponentInterface
 
                         if($client->resourceId == $receiver_connection_id[0]->connection_id)
                         {
-                            Chat::where('id', $chat_message_id)->update(['message_status' =>'Send']);
+
+                            Post::where('id', $chat_message_id)->update(['message_status' =>'Send']);
 
                             $send_data['message_status'] = 'Send';
                         }
@@ -416,7 +417,7 @@ class SocketController extends Controller implements MessageComponentInterface
 
             if($data->type == 'request_chat_history')
             {
-                $chat_data = Chat::select('id', 'from_user_id', 'to_user_id', 'chat_message', 'message_status')
+                $chat_data = Post::select('id', 'from_user_id', 'to_user_id', 'post_message', 'message_status')
                                     ->where(function($query) use ($data){
                                         $query->where('from_user_id', $data->from_user_id)->where('to_user_id', $data->to_user_id);
                                     })
@@ -449,7 +450,7 @@ class SocketController extends Controller implements MessageComponentInterface
             {
                 //update chat status
 
-                Chat::where('id', $data->chat_message_id)->update(['message_status' => $data->chat_message_status]);
+                Post::where('id', $data->chat_message_id)->update(['message_status' => $data->chat_message_status]);
 
                 $sender_connection_id = User::select('connection_id')->where('id', $data->from_user_id)->get();
 
@@ -468,7 +469,7 @@ class SocketController extends Controller implements MessageComponentInterface
 
             if($data->type == 'check_unread_message')
             {
-                $chat_data = Chat::select('id', 'from_user_id', 'to_user_id')->where('message_status', '!=', 'Read')->where('from_user_id', $data->to_user_id)->get();
+                $chat_data = Post::select('id', 'from_user_id', 'to_user_id')->where('message_status', '!=', 'Read')->where('from_user_id', $data->to_user_id)->get();
 
                 /*
                 SELECT id, from_user_id, to_user_id FROM chats 
@@ -482,7 +483,7 @@ class SocketController extends Controller implements MessageComponentInterface
 
                 foreach($chat_data as $row)
                 {
-                    Chat::where('id', $row->id)->update(['message_status' => 'Send']);
+                    Post::where('id', $row->id)->update(['message_status' => 'Send']);
 
                     foreach($this->clients as $client)
                     {

@@ -15,22 +15,22 @@
             <div class="flex flex-col mb-4">
               <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">Contents</p>
               <p class="py-2 px-3 text-grey-darkest" id="sentence">
-                {{$result_input->sentence}}
+                {{$result_input["sentence"]}}
               </p>
               <p class="py-2 px-3 text-grey-darkest" id="score">
-                {{$result_output->score}}
+                {{$result_output["score"]}}
               </p>
               @foreach($keigo_lis as $keigo)
               <p class="py-2 px-3 text-grey-darkest" id="score">
                 "{{$keigo}}"があります。修正しましょう!
               </p>
               @endforeach
-              @if($result_output->kanji_rate>=0.2)
+              @if($result_output["kanji_rate"]>=0.2)
               <p class="py-2 px-3 text-grey-darkest" id="score">
                 漢字が多いです!もっと柔らかくしましょう!
               </p>
               @endif
-              @if($result_output->emoji_rate<=0.2)
+              @if($result_output["emoji_rate"]<=0.2)
               <p class="py-2 px-3 text-grey-darkest" id="score">
                 絵文字が少ないです!もっと使いましょう!
               </p>
