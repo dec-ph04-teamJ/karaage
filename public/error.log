@@ -1,3 +1,6 @@
-/usr/local/lib/python3.10/dist-packages/sklearn/base.py:299: UserWarning: Trying to unpickle estimator LogisticRegression from version 1.0.2 when using version 1.2.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
-https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
-  warnings.warn(
+Traceback (most recent call last):
+  File "/var/www/html/public/../app/Python/test.py", line 62, in <module>
+    score=get_score(feature_df)
+  File "/var/www/html/public/../app/Python/test.py", line 50, in get_score
+    with open('storage/model.pickle','rb') as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'storage/model.pickle'
