@@ -13,12 +13,12 @@ class SampleController extends Controller
 {
     function index()
     {
-        return view('login');
+        return view('real_chat.login');
     }
 
     function registration()
     {
-        return view('registration');
+        return view('real_chat.registration');
     }
 
     function validate_registration(Request $request)
@@ -37,7 +37,7 @@ class SampleController extends Controller
             'password' => Hash::make($data['password'])
         ]);
 
-        return redirect('login')->with('success', 'Registration Completed, now you can login');
+        return redirect('real/login')->with('success', 'Registration Completed, now you can login');
     }
 
     function validate_login(Request $request)
@@ -58,17 +58,17 @@ class SampleController extends Controller
             return redirect('dashboard');
         }
 
-        return redirect('login')->with('success', 'Login details are not valid');
+        return redirect('real/login')->with('success', 'Login details are not valid');
     }
 
     function dashboard()
     {
         if(Auth::check())
         {
-            return view('dashboard');
+            return view('real_chat.dashboard');
         }
 
-        return redirect('login')->with('success', 'you are not allowed to access');
+        return redirect('real/login')->with('success', 'you are not allowed to access');
     }
 
     function logout()
@@ -77,7 +77,7 @@ class SampleController extends Controller
 
         Auth::logout();
 
-        return Redirect('login');
+        return Redirect('real/login');
     }
 
     public function profile()
@@ -89,7 +89,7 @@ class SampleController extends Controller
             return view('profile', compact('data'));
         }
 
-        return redirect("login")->with('success', 'you are not allowed to access');
+        return redirect("real/login")->with('success', 'you are not allowed to access');
     }
 
     public function profile_validation(Request $request)
