@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 use Ratchet\MessageComponentInterface;
@@ -10,12 +10,11 @@ use Ratchet\ConnectionInterface;
 
 use App\Models\User;
 
-use App\Models\Chat;
+use App\Models\Post;
 
 use App\Models\Chat_request;
 
 use Auth;
-
 class SocketController extends Controller implements MessageComponentInterface
 {
     protected $clients;
@@ -28,7 +27,7 @@ class SocketController extends Controller implements MessageComponentInterface
     public function onOpen(ConnectionInterface $conn)
     {
         $this->clients->attach($conn);
-
+        Log::error('on open.');
         $querystring = $conn->httpRequest->getUri()->getQuery();
 
         parse_str($querystring, $queryarray);
@@ -58,6 +57,10 @@ class SocketController extends Controller implements MessageComponentInterface
 
     public function onMessage(ConnectionInterface $conn, $msg)
     {
+
+        Log::error("msg ");
+        Log::error("msg -> {$msg}");
+        Log::error('on message.');
         if(preg_match('~[^\x20-\x7E\t\r\n]~', $msg) > 0)
         {
             //receiver image in binary string message
@@ -79,7 +82,6 @@ class SocketController extends Controller implements MessageComponentInterface
 
 
         $data = json_decode($msg);
-
         if(isset($data->type))
         {
             if($data->type == 'request_load_unconnected_user')
@@ -368,50 +370,76 @@ class SocketController extends Controller implements MessageComponentInterface
             {
                 //save chat message in mysql
 
+
                 $chat = new Post;
 
                 $chat->from_user_id = $data->from_user_id;
 
                 $chat->to_user_id = $data->to_user_id;
 
-                $chat->chat_message = $data->message;
+                $chat->post_message = $data->message;
 
                 $chat->message_status = 'Not Send';
-
-                $chat->save();
-
-                $chat_message_id = $chat->id;
-
-                $receiver_connection_id = User::select('connection_id')->where('id', $data->to_user_id)->get();
-
-                $sender_connection_id = User::select('connection_id')->where('id', $data->from_user_id)->get();
-
-                foreach($this->clients as $client)
+                
+                // TODO 1 敬語バリデーションを行って、画面に戻したいメッセージを返す
+                
+                if(true)
                 {
-                    if($client->resourceId == $receiver_connection_id[0]->connection_id || $client->resourceId == $sender_connection_id[0]->connection_id)
+                    $send_data['user_id'] = $data->to_user_id;
+
+                    $send_data['warning'] = "全然ダメこれ。こういう文章にして";
+
+                    $send_data['response_to_user_keigo_warinng'] = true;
+    
+                    $sender_connection_id = User::select('connection_id')->where('id', $data->from_user_id)->get();
+   
+                    foreach($this->clients as $client)
                     {
-                        $send_data['chat_message_id'] = $chat_message_id;
-                        
-                        $send_data['message'] = $data->message;
-
-                        $send_data['from_user_id'] = $data->from_user_id;
-
-                        $send_data['to_user_id'] = $data->to_user_id;
-
-                        if($client->resourceId == $receiver_connection_id[0]->connection_id)
+                        if($client->resourceId == $sender_connection_id[0]->connection_id )
                         {
-                            Post::where('id', $chat_message_id)->update(['message_status' =>'Send']);
-
-                            $send_data['message_status'] = 'Send';
+                            $client->send(json_encode($send_data));
                         }
-                        else
+                    }
+                }else{
+                    
+                    // TODO 2 文章をギャルっぽく変換
+
+                    $chat->save();
+
+                    $post_message_id = $chat->id;
+    
+                    $receiver_connection_id = User::select('connection_id')->where('id', $data->to_user_id)->get();
+    
+                    $sender_connection_id = User::select('connection_id')->where('id', $data->from_user_id)->get();
+    
+                    foreach($this->clients as $client)
+                    {
+                        if($client->resourceId == $receiver_connection_id[0]->connection_id || $client->resourceId == $sender_connection_id[0]->connection_id)
                         {
-                            $send_data['message_status'] = 'Not Send';
+                            $send_data['post_message_id'] = $post_message_id;
+                            
+                            $send_data['message'] = $data->message;
+    
+                            $send_data['from_user_id'] = $data->from_user_id;
+    
+                            $send_data['to_user_id'] = $data->to_user_id;
+    
+                            if($client->resourceId == $receiver_connection_id[0]->connection_id)
+                            {
+                                Post::where('id', $post_message_id)->update(['message_status' =>'Send']);
+    
+                                $send_data['message_status'] = 'Send';
+                            }
+                            else
+                            {
+                                $send_data['message_status'] = 'Not Send';
+                            }
+    
+                            $client->send(json_encode($send_data));
                         }
-
-                        $client->send(json_encode($send_data));
                     }
                 }
+
             }
 
             if($data->type == 'request_chat_history')
@@ -424,12 +452,14 @@ class SocketController extends Controller implements MessageComponentInterface
                                         $query->where('from_user_id', $data->to_user_id)->where('to_user_id', $data->from_user_id);
                                     })->orderBy('id', 'ASC')->get();
                 /*
-                SELECT id, from_user_id, to_user_id, chat_message, message status 
+                SELECT id, from_user_id, to_user_id, post_message, message status 
                 FROM chats 
                 WHERE (from_user_id = $data->from_user_id AND to_user_id = $data->to_user_id) 
                 OR (from_user_id = $data->to_user_id AND to_user_id = $data->from_user_id)
                 ORDER BY id ASC
                 */
+
+                Log::error("history: {$chat_data}");
 
                 $send_data['chat_history'] = $chat_data;
 
@@ -449,7 +479,7 @@ class SocketController extends Controller implements MessageComponentInterface
             {
                 //update chat status
 
-                Post::where('id', $data->chat_message_id)->update(['message_status' => $data->chat_message_status]);
+                Post::where('id', $data->post_message_id)->update(['message_status' => $data->post_message_status]);
 
                 $sender_connection_id = User::select('connection_id')->where('id', $data->from_user_id)->get();
 
@@ -457,9 +487,9 @@ class SocketController extends Controller implements MessageComponentInterface
                 {
                     if($client->resourceId == $sender_connection_id[0]->connection_id)
                     {
-                        $send_data['update_message_status'] = $data->chat_message_status;
+                        $send_data['update_message_status'] = $data->post_message_status;
 
-                        $send_data['chat_message_id'] = $data->chat_message_id;
+                        $send_data['post_message_id'] = $data->post_message_id;
 
                         $client->send(json_encode($send_data));
                     }
@@ -490,7 +520,7 @@ class SocketController extends Controller implements MessageComponentInterface
                         {
                             $send_data['count_unread_message'] = 1;
 
-                            $send_data['chat_message_id'] = $row->id;
+                            $send_data['post_message_id'] = $row->id;
 
                             $send_data['from_user_id'] = $row->from_user_id;
                         }
@@ -499,7 +529,7 @@ class SocketController extends Controller implements MessageComponentInterface
                         {
                             $send_data['update_message_status'] = 'Send';
 
-                            $send_data['chat_message_id'] = $row->id;
+                            $send_data['post_message_id'] = $row->id;
 
                             $send_data['unread_msg'] = 1;
 
@@ -515,6 +545,7 @@ class SocketController extends Controller implements MessageComponentInterface
 
     public function onClose(ConnectionInterface $conn)
     {
+        Log::error('on close.');
         $this->clients->detach($conn);
 
         $querystring = $conn->httpRequest->getUri()->getQuery();
@@ -554,8 +585,7 @@ class SocketController extends Controller implements MessageComponentInterface
 
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
-        echo "An error has occurred: {$e->getMessage()} \n";
-
+        Log::error("An error has occurred: {$e->getMessage()} \n");
         $conn->close();
     }
 }

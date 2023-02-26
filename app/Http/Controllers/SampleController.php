@@ -13,12 +13,12 @@ class SampleController extends Controller
 {
     function index()
     {
-        return view('real_chat.login');
+        return view('login');
     }
 
     function registration()
     {
-        return view('real_chat.registration');
+        return view('registration');
     }
 
     function validate_registration(Request $request)
@@ -34,7 +34,10 @@ class SampleController extends Controller
         User::create([
             'name'  =>  $data['name'],
             'email' =>  $data['email'],
-            'password' => Hash::make($data['password'])
+            'password' => Hash::make($data['password']),
+            'token' => '',
+            'connection_id' => 0,
+            'user_image' => ''
         ]);
 
         return redirect('real/login')->with('success', 'Registration Completed, now you can login');
@@ -55,7 +58,7 @@ class SampleController extends Controller
 
             User::where('id', Auth::id())->update([ 'token' => $token ]);
 
-            return redirect('dashboard');
+            return redirect('real_dashboard');
         }
 
         return redirect('real/login')->with('success', 'Login details are not valid');
@@ -65,7 +68,7 @@ class SampleController extends Controller
     {
         if(Auth::check())
         {
-            return view('real_chat.dashboard');
+            return view('real_dashboard');
         }
 
         return redirect('real/login')->with('success', 'you are not allowed to access');
