@@ -383,7 +383,7 @@ class SocketController extends Controller implements MessageComponentInterface
                 
                 // TODO 1 敬語バリデーションを行って、画面に戻したいメッセージを返す
                 
-                if(true)
+                if(false)
                 {
                     $send_data['user_id'] = $data->to_user_id;
 
