@@ -57,7 +57,7 @@ class ChatController extends Controller
         $input_id=Chatinput::getAllOrderByUpdated_at(Auth::user()->id)->first()->id;
         #inputテーブルに保存。今入力した人のinput_idを取得
 
-        $pythonPath =  "../app/Python/";
+        $pythonPath =  "../app/python/";
         $command = "python3 ".$pythonPath."test.py 2>error.log {$result_input->sentence}";
         exec($command, $outputs, $return);
 

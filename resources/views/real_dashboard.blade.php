@@ -62,6 +62,16 @@
 	background-color: #ece5dd;
 	padding: 16px;
 }
+#warning_box
+{
+	min-height: 50px; 
+	max-height: 200px; 
+	overflow-y: scroll; 
+	margin-bottom:16px; 
+	background-color: #FFD400;
+	padding: 16px;
+}
+
 
 #user_list
 {
@@ -185,6 +195,11 @@ conn.onmessage = function(e){
 	if(data.response_to_user_chat_request)
 	{
 		load_unread_notification(data.user_id);
+	}
+
+	if(data.response_to_user_keigo_warinng)
+	{
+		output_warining_message(data.warning)
 	}
 
 	if(data.response_load_notification)
@@ -324,16 +339,16 @@ conn.onmessage = function(e){
 
 			if(data.message_status == 'Not Send')
 			{
-				icon_style = '<span id="chat_status_'+data.chat_message_id+'" class="float-end"><i class="fas fa-check text-muted"></i></span>';
+				icon_style = '<span id="chat_status_'+data.post_message_id+'" class="float-end"><i class="fas fa-check text-muted"></i></span>';
 			}
 			if(data.message_status == 'Send')
 			{
-				icon_style = '<span id="chat_status_'+data.chat_message_id+'" class="float-end"><i class="fas fa-check-double text-muted"></i></span>';
+				icon_style = '<span id="chat_status_'+data.post_message_id+'" class="float-end"><i class="fas fa-check-double text-muted"></i></span>';
 			}
 
 			if(data.message_status == 'Read')
 			{
-				icon_style = '<span class="text-primary float-end" id="chat_status_'+data.chat_message_id+'"><i class="fas fa-check-double"></i></span>';
+				icon_style = '<span class="text-primary float-end" id="chat_status_'+data.post_message_id+'"><i class="fas fa-check-double"></i></span>';
 			}
 
 			html += `
@@ -357,7 +372,7 @@ conn.onmessage = function(e){
 				</div>
 				`;
 
-				update_message_status(data.chat_message_id, from_user_id, to_user_id, 'Read');
+				update_message_status(data.post_message_id, from_user_id, to_user_id, 'Read');
 			}
 			else
 			{
@@ -375,7 +390,7 @@ conn.onmessage = function(e){
 	            	}
 	            	count_unread_message_element.innerHTML = '<span class="badge bg-primary rounded-pill">'+count_unread_message+'</span>';
 
-	            	update_message_status(data.chat_message_id, data.from_user_id, data.to_user_id, 'Send');
+	            	update_message_status(data.post_message_id, data.from_user_id, data.to_user_id, 'Send');
 	            }
 			}
 			
@@ -422,7 +437,7 @@ conn.onmessage = function(e){
 				<div class="row">
 					<div class="col col-3">&nbsp;</div>
 					<div class="col col-9 alert alert-success text-dark shadow-sm">
-					`+data.chat_history[count].chat_message+ icon_style + `
+					`+data.chat_history[count].post_message+ icon_style + `
 					</div>
 				</div>
 				`;
@@ -439,7 +454,7 @@ conn.onmessage = function(e){
 				html += `
 				<div class="row">
 					<div class="col col-9 alert alert-light text-dark shadow-sm">
-					`+data.chat_history[count].chat_message+`
+					`+data.chat_history[count].post_message+`
 					</div>
 				</div>
 				`;
@@ -460,7 +475,7 @@ conn.onmessage = function(e){
 
 	if(data.update_message_status)
 	{
-		var chat_status_element = document.querySelector('#chat_status_'+data.chat_message_id+'');
+		var chat_status_element = document.querySelector('#chat_status_'+data.post_message_id+'');
 
 		if(chat_status_element)
 		{
@@ -581,12 +596,17 @@ function make_chat_area(user_id, to_user_name)
 {
 	var html = `
 	<div id="chat_history"></div>
+	<div id="warning_area">
+
+	</div>
+
+
 	<div class="input-group mb-3">
 		<div id="message_area" class="form-control" contenteditable style="min-height:125px; border:1px solid #ccc; border-radius:5px;"></div>
 		<label class="btn btn-warning" style="line-height:125px;">
 			<i class="fas fa-upload"></i> <input type="file" id="browse_image" onchange="upload_image()" hidden />
 		</label>
-		<button type="button" class="btn btn-success" id="send_button" onclick="send_chat_message()"><i class="fas fa-paper-plane"></i></button>
+		<button type="button" class="btn btn-success" id="send_button" onclick="send_post_message()"><i class="fas fa-paper-plane"></i></button>
 	</div>
 	`;
 
@@ -610,8 +630,11 @@ function close_chat()
 	to_user_id = '';
 }
 
-function send_chat_message()
+function send_post_message()
 {
+
+	clear_warining_message()
+
 	document.querySelector('#send_button').disabled = true;
 
 	var message = document.getElementById('message_area').innerHTML.trim();
@@ -641,13 +664,13 @@ function load_chat_data(from_user_id, to_user_id)
 	conn.send(JSON.stringify(data));
 }
 
-function update_message_status(chat_message_id, from_user_id, to_user_id, chat_message_status)
+function update_message_status(post_message_id, from_user_id, to_user_id, post_message_status)
 {
 	var data = {
-		chat_message_id : chat_message_id,
+		post_message_id : post_message_id,
 		from_user_id : from_user_id,
 		to_user_id : to_user_id,
-		chat_message_status : chat_message_status,
+		post_message_status : post_message_status,
 		type : 'update_chat_status'
 	};
 
@@ -706,6 +729,25 @@ function upload_image()
 	}
 
 	file_reader.readAsArrayBuffer(file_element);
+}
+
+function output_warining_message(warning)
+{
+	html = `
+	<div id='warning_box'>`+warning+`</div>
+	`
+
+	var warning_element = document.querySelector('#warning_area');
+	warning_element.innerHTML = html;
+}
+
+function clear_warining_message()
+{
+	html = `
+	`
+
+	var warning_element = document.querySelector('#warning_area');
+	warning_element.innerHTML = html;
 }
 
 </script>
