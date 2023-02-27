@@ -15,9 +15,11 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                     
-                <ul class="navbar-nav">
+                <ul class="navbar-nav" style="display: flex;">
+
                     @guest
 
                     <li class="nav-item">
@@ -30,21 +32,25 @@
                     @else
 
                     <li class="nav-item">
-                        @if(Auth::user()->user_image != '')
-                        <a class="nav-link" href="#"><b>Welcome <img src="{{ asset('images/' . Auth::user()->user_image ) }}" width="35" class="rounded-circle" />&nbsp; {{ Auth::user()->name }}</b></a>
-                        @else
-                        <a class="nav-link" href="#"><b>Welcome <img src="{{ asset('images/no-image.jpg') }}" width="35" class="rounded-circle" />&nbsp;{{ Auth::user()->name }}</b></a>
-                        @endif
+                        <a class="nav-link" href="{{ route('chatinput') }}">リアルタイムチャット </a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('profile') }}">Profile</a>
+                        <a class="nav-link" href="{{ route('chatinput') }}">文章入力画面へ</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('chatoutput.index') }}">文章入力履歴へ</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav" style="display: flex;margin-left:auto;">
+                    <li class="nav-item">
+                        <span><img src="{{ asset('images/no-image.jpg') }}" width="35" class="rounded-circle" />&nbsp;{{ Auth::user()->name }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('real_profile') }}">Profile</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}">Logout</a>
                     </li>
-
                     @endguest
                 </ul>
                 
