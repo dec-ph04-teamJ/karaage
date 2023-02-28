@@ -538,7 +538,7 @@ class SocketController extends Controller implements MessageComponentInterface
                         {
                             $send_data['post_message_id'] = $post_message_id;
                             
-                            $send_data['message'] = $girl_word;
+                            $send_data['message'] = $data->message;
     
                             $send_data['from_user_id'] = $data->from_user_id;
     
