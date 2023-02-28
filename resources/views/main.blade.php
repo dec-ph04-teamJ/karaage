@@ -43,7 +43,9 @@
                 </ul>
                 <ul class="navbar-nav" style="display: flex;margin-left:auto;">
                     <li class="nav-item">
-                        <span><img src="{{ asset('images/no-image.jpg') }}" width="35" class="rounded-circle" />&nbsp;{{ Auth::user()->name }}</span>
+                        {{-- <span><img src="{{ asset('images/no-image.jpg') }}" width="35" class="rounded-circle" />&nbsp;{{ Auth::user()->name }}</span> --}}
+                        <span><img src="{{ asset('images/michopa.jpg') }}" width="35" class="rounded-circle" />&nbsp;{{ Auth::user()->name }}</span>
+                        {{-- <span><img src="{{ asset('images/gyaru_picture.png') }}" width="35" class="rounded-circle" />&nbsp;{{ Auth::user()->name }}</span> --}}
                     </li>
                     <!--
                     <li class="nav-item">
