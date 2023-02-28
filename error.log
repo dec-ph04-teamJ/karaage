@@ -1,3 +1,6 @@
+start: test.py
+execute get_score
 /usr/local/lib/python3.10/dist-packages/sklearn/base.py:299: UserWarning: Trying to unpickle estimator LogisticRegression from version 1.0.2 when using version 1.2.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
 https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
   warnings.warn(
+finished
