@@ -50,6 +50,9 @@
 #chat_area
 {
 	min-height: 500px;
+	background-image: url(images/gyaru_picture.png);
+	background-position:center center;
+	background-size:cover;
 	/*overflow-y: scroll*/;
 }
 
@@ -59,11 +62,11 @@
 	max-height: 500px; 
 	overflow-y: scroll; 
 	margin-bottom:16px; 
-	background-color: #ece5dd;
+	/* background-color: #ece5dd; */
 	padding: 16px;
-	background-image: url(images/gyaru_picture.png);
+	/* background-image: url(images/jagger_white.png);
 	background-position:center center;
-	background-size:cover;
+	background-size:cover; */
 }
 #warning_box
 {
@@ -81,6 +84,9 @@
 	min-height: 500px; 
 	max-height: 500px; 
 	overflow-y: scroll;
+	background-image: url(images/jagger_pink.png);
+	background-position:center center;
+	background-size:cover;
 }
 </style>
 
