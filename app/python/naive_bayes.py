@@ -294,7 +294,7 @@ def train_data_2():
   all = [to_boss, from_boss, colleague, friend, couple]
   all_len = [len(to_boss), len(from_boss), len(colleague), len(friend), len(couple)]
   print(all_len)
-  all_name = ["部下から上司", "上司から部下", "同僚", "友達", "カップル"]
+  all_name = ["部下から上司に対する", "上司から部下に対する", "同僚同士の", "友達同士の", "カップルの"]
   return all, all_name
 
 # ---------------------------
