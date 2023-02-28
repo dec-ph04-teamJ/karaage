@@ -486,15 +486,19 @@ class SocketController extends Controller implements MessageComponentInterface
                             "ご教授ください"=>"フォローおねしゃす😃！",
                             "ご教授下さい"=>"フォローおねしゃす😃！",
                             "ご教示下さい"=>"フォローおねしゃす！😃",
-                            "。"=>"!!!!!!"
+                            "お疲れ様です"=>"おつかれちゃん♡", 
+                            "お疲れ様でした"=>"おつかれちゃん♡", 
+                            "。"=>"!!!!!!", 
+                            "．"=>"!!!!!😃"
                             );
 
         $girl_word=$data->message;
-        if(strlen($girl_word)>15){
-            $girl_word=r"りょ😃"
-        }
-        foreach($girl_words_lis as $key=>$value){
+        if(mb_strlen($girl_word)>50){
+            $girl_word="りょ😃";
+        }else{foreach($girl_words_lis as $key=>$value)
+            {
             $girl_word=str_replace($key,$value, $girl_word);
+            }
         }
         Log::error('save Chatinput.7');
                     ///-----------------------------------------
@@ -541,7 +545,7 @@ class SocketController extends Controller implements MessageComponentInterface
                         {
                             $send_data['post_message_id'] = $post_message_id;
                             
-                            $send_data['message'] = $data->message;
+                            $send_data['message'] = $girl_word;
     
                             $send_data['from_user_id'] = $data->from_user_id;
     
