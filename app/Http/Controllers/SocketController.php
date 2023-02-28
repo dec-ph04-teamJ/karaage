@@ -14,6 +14,12 @@ use App\Models\Post;
 
 use App\Models\Chat_request;
 
+use App\Models\Chatinput;
+
+use App\Models\Chatoutput;
+
+use App\Models\Keigo;
+
 use Auth;
 class SocketController extends Controller implements MessageComponentInterface
 {
@@ -380,14 +386,117 @@ class SocketController extends Controller implements MessageComponentInterface
                 $chat->post_message = $data->message;
 
                 $chat->message_status = 'Not Send';
+
+
+
+///----------------------------------------
+
+
+
+                $result_input=new Chatinput;
+                $result_input->sentence=$data->message;
+                $result_input->user_id=$data->from_user_id;
+                $result_input->save();
+                //$send_data["sentence"]=$data->message;
+                //$send_data["user_id"]=$data->from_user_id;
+
+
+
+                $input_id=Chatinput::getAllOrderByUpdated_at($data->from_user_id)->first()->id;
+                #inputテーブルに保存。今入力した人のinput_idを取得
+
+
+                $pythonPath =  "./app/python/";
+                $command = "python3 ".$pythonPath."test.py 2>error.log {$result_input->sentence}";
+                exec($command, $outputs, $return);
+
+
+                #コマンドを実行
+                $keigo_lis=[];
+                $outputs_keigo=explode("'",$outputs[1]);
+                $outputs_keigo_count=count($outputs_keigo);
+                for($count=0;$count<$outputs_keigo_count;$count++){
+                    if($count%2==1){
+                        $keigo_lis[]=$outputs_keigo[$count];
+                    }
+                }
+                $keigo_lis=array_unique($keigo_lis);
+                #配列でpythonから渡される場合pythonで使われていた[]や""も文字列に含まれるのでそれを削除する。
+                #また重複している敬語を削除したものがkeigo_lisに格納されている。
+
+
+                $result_output=new Chatoutput;
+                $result_output->input_id=$input_id;
+                $result_output->user_id=$data->from_user_id;
+                $result_output->score=(float) $outputs[0];
+                $result_output->kanji_rate=(float) $outputs[2];
+                $result_output->emoji_rate=(float) $outputs[4];
+                $result_output->save();
+                               
+                //$send_data[""]=$data->message;
+                //$send_data["user_id"]=$data->from_user_id;
+
+
+                Log::error('save Chatinput.6');
+
+                $output_id=Chatoutput::getAllOrderByUpdated_at($data->from_user_id)->first()->id;
+                foreach($keigo_lis as $keigo){
+                    $result_keigo=new Keigo;
+                    $result_keigo->output_id=$output_id;
+                    $result_keigo->keigo=$keigo;
+                    $result_keigo->save();
+                }
+
+        $girl_words_lis=array("思います"=>"思うよ🤔",
+                            "承知しました"=>"OK!!😆",
+                            "拝見します"=>"見るね！🤗",
+                            "拝見いたします"=>"見るね！🤗",
+                            "拝見しました"=>"見たよ!😚",
+                            "拝見いたしました"=>"見たよ！🤗",
+                            "頂きました"=>"もらったよ!🥰",
+                            "頂きます"=>"もらうね!😃",
+                            "ですよね"=>"だよね😆～",
+                            "お願いいたします"=>"よろしく~😌",
+                            "お願致します"=>"よろしく~😌",
+                            "申し訳ありません"=>"すまん😰",
+                            "失礼しました"=>"ごめんね😔",
+                            "ございます"=>"す",
+                            "参上します"=>"行くよん!😆",
+                            "お待ちしております"=>"待ってるね!😆",
+                            "またのお越しを"=>"また来るの",
+                            "失礼いたしました"=>"ごめんね😔",
+                            "失礼致しました"=>"ごめんね😔",
+                            "申し訳ございません"=>"すまん😰",
+                            "お待ちしております"=>"待ってるね!😆",
+                            "かしこまりました"=>"分かった!😆",
+                            "なぜですか"=>"なんで?🤔",
+                            "どうしてでしょうか"=>"なんで?🤔",
+                            "存じ上げております"=>"知ってるよ!😆",
+                            "存じております"=>"知ってるよ!😆",
+                            "ご無沙汰しております"=>"久しぶり~!!😆",
+                            "ご教示ください"=>"教えて！😃",
+                            "ご教授ください"=>"教えて！😃",
+                            "ご教授下さい"=>"教えて！😃",
+                            "ご教示下さい"=>"教えて！😃",
+                            );
+
+        $girl_word=$data->message;
+        foreach($girl_words_lis as $key=>$value){
+            $girl_word=str_replace($key,$value, $girl_word);
+        }
+        Log::error('save Chatinput.7');
+                    ///-----------------------------------------
+
+
+
                 
                 // TODO 1 敬語バリデーションを行って、画面に戻したいメッセージを返す
                 
-                if(true)
+                if(false)
                 {
                     $send_data['user_id'] = $data->to_user_id;
 
-                    $send_data['warning'] = "全然ダメこれ。こういう文章にして";
+                    $send_data['warning'] = "点数が低すぎます";
 
                     $send_data['response_to_user_keigo_warinng'] = true;
     
@@ -406,11 +515,14 @@ class SocketController extends Controller implements MessageComponentInterface
 
                     $chat->save();
 
+
                     $post_message_id = $chat->id;
-    
+
                     $receiver_connection_id = User::select('connection_id')->where('id', $data->to_user_id)->get();
     
                     $sender_connection_id = User::select('connection_id')->where('id', $data->from_user_id)->get();
+
+                    Post::where('id', $post_message_id)->update(['post_message' =>$girl_word]);
     
                     foreach($this->clients as $client)
                     {
@@ -418,11 +530,17 @@ class SocketController extends Controller implements MessageComponentInterface
                         {
                             $send_data['post_message_id'] = $post_message_id;
                             
-                            $send_data['message'] = $data->message;
+                            $send_data['message'] = $girl_word;
     
                             $send_data['from_user_id'] = $data->from_user_id;
     
                             $send_data['to_user_id'] = $data->to_user_id;
+
+                            $send_data['warning'] = "文章堅いんじゃない??ギャル語にするよ~😆";
+
+                            $send_data['response_to_user_keigo_warinng'] = true;
+    
+
     
                             if($client->resourceId == $receiver_connection_id[0]->connection_id)
                             {

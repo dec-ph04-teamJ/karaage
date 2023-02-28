@@ -32,7 +32,7 @@
                     @else
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('chatinput') }}">リアルタイムチャット </a>
+                        <a class="nav-link" href="{{ route('real_dashboard') }}">リアルタイムチャット </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('chatinput') }}">文章入力画面へ</a>
@@ -45,9 +45,11 @@
                     <li class="nav-item">
                         <span><img src="{{ asset('images/no-image.jpg') }}" width="35" class="rounded-circle" />&nbsp;{{ Auth::user()->name }}</span>
                     </li>
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('real_profile') }}">Profile</a>
                     </li>
+                    -->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}">Logout</a>
                     </li>
@@ -62,6 +64,12 @@
         @yield('content')
         
     </div>
-    
 </body>
 </html>
+
+
+
+
+
+
+
