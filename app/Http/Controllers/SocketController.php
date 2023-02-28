@@ -559,6 +559,50 @@ class SocketController extends Controller implements MessageComponentInterface
                             $client->send(json_encode($send_data));
                         }
                     }
+                }else{
+                    // そのまま文章を送る
+                    $chat->save();
+
+                    $post_message_id = $chat->id;
+
+                    $receiver_connection_id = User::select('connection_id')->where('id', $data->to_user_id)->get();
+    
+                    $sender_connection_id = User::select('connection_id')->where('id', $data->from_user_id)->get();
+
+                    // Post::where('id', $post_message_id)->update(['post_message' =>$girl_word]);
+    
+                    foreach($this->clients as $client)
+                    {
+                        if($client->resourceId == $receiver_connection_id[0]->connection_id || $client->resourceId == $sender_connection_id[0]->connection_id)
+                        {
+                            $send_data['post_message_id'] = $post_message_id;
+                            
+                            $send_data['message'] = $girl_word;
+    
+                            $send_data['from_user_id'] = $data->from_user_id;
+    
+                            $send_data['to_user_id'] = $data->to_user_id;
+
+                            $send_data['warning'] = "文章いい感じ！😆";
+
+                            $send_data['response_to_user_keigo_warinng'] = true;
+    
+
+    
+                            if($client->resourceId == $receiver_connection_id[0]->connection_id)
+                            {
+                                Post::where('id', $post_message_id)->update(['message_status' =>'Send']);
+    
+                                $send_data['message_status'] = 'Send';
+                            }
+                            else
+                            {
+                                $send_data['message_status'] = 'Not Send';
+                            }
+    
+                            $client->send(json_encode($send_data));
+                        }
+                    }
                 }
 
             }
