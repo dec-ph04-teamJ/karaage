@@ -47,18 +47,20 @@ def get_feature_value_and_included_keigo(df):
 
 def get_score(df):
   test_x=df[["漢字の割合","絵文字の割合","敬語の割合"]]
-  with open('storage/model.pickle','rb') as f:
+  with open('./app/python//model.pickle','rb') as f:
     lr= pickle.load(f)
   y_pred_prob=lr.predict_proba(test_x)
   score=y_pred_prob[0][1]*100
   return score
 
+print('start: test.py', file=sys.stderr)
 
 str_df=str_to_dataframe(args[1])
 feature_df=get_feature_value_and_included_keigo(str_df)[0]
 included_keigo_lis=get_feature_value_and_included_keigo(str_df)[1]
 #get_feature_value_and_included_keigoは引数を二つ渡しており、一つ目は特徴量が入ったdataframeもう一つが文章中に含まれる敬語リストである。
 #それを配列で取得している。
+print('execute get_score', file=sys.stderr)
 score=get_score(feature_df)
 
 
@@ -70,5 +72,5 @@ print(feature_df["絵文字の割合"].iloc[-1])
 #printでphpのコントローラに渡す
 #データフレームで取得した値はデータフレーム型になっているため数値のみを抽出したものを取得。
 
-
+print('finished', file=sys.stderr)
 
