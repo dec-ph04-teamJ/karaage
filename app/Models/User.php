@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'token',
+        'connection_id',
+        'user_status',
+        'user_image'
     ];
 
     /**
@@ -41,4 +45,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function Get_Chats(){
+        return $this->hasMany(Chatinput::class);
+    }
+    #ある特定のinput情報を取得できる。
+    public function Get_Chat_Scores(){
+        return $this->hasMany(Chatoutput::class);
+    }
+    #ある特定のユーザーが持つoutput情報を取得できる。
+
+
 }

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Phase4_app</title>
+        <title>あげあげ</title>
 
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -36,7 +36,7 @@
                                 @if (Route::has('login'))
                                     <div class="text-center ">
                                         @auth
-                                            <a href="{{ url('/dashboard') }}" class="text-6xl text-gray-700 dark:text-gray-500 ">to</a>
+                                            <a href="{{ url('/real_dashboard') }}" class="text-6xl text-gray-700 dark:text-gray-500 ">to</a>
                                         @else
                                         <div class="p-6 border-gray-500 dark:border-gray-700 md:border-t-4 ">
                                             <a href="{{ route('login') }}" class="text-center text-6xl text-gray-700 dark:text-gray-500 "><h3>Log in</h3></a>
