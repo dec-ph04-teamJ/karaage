@@ -1,4 +1,5 @@
-{{-- <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+{{-- <nav x-data="{ open: false }" class="bg-white border-b border-gray-100"> --}}
+<nav x-data="{ open: false }" class="border-b border-gray-100" style="background-color: #e3f2fd;">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -7,8 +8,8 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('chatoutput.index')">
-                        {{ __('今までの点数') }}
+                    <x-nav-link :href="route('real_dashboard')">
+                        {{ __('リアルタイムチャット') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -17,8 +18,8 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('chat.index')">
-                        {{ __('チャットへ') }}
+                    <x-nav-link :href="route('chatoutput.index')">
+                        {{ __('今までのチャットの採点結果') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -98,4 +99,4 @@
             </div>
         </div>
     </div>
-</nav> --}}
+</nav>

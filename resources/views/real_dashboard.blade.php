@@ -161,7 +161,9 @@ conn.onmessage = function(e){
 				}
 				else
 				{
-					user_image = `<img src="{{ asset('images/no-image.jpg') }}" width="40" class="rounded-circle" />`
+					// user_image = `<img src="{{ asset('images/no-image.jpg') }}" width="40" class="rounded-circle" />`
+					user_image = `<img src="{{ asset('images/michopa.jpg') }}" width="40" class="rounded-circle" />`
+					// user_image = `<img src="{{ asset('images/gyaru_picture.png') }}" width="40" class="rounded-circle" />`
 				}
 
 				html += `
@@ -217,7 +219,9 @@ conn.onmessage = function(e){
 			}
 			else
 			{
-				user_image = `<img src="{{ asset('images/no-image.jpg') }}" width="40" class="rounded-circle" />`;
+				// user_image = `<img src="{{ asset('images/no-image.jpg') }}" width="40" class="rounded-circle" />`
+				user_image = `<img src="{{ asset('images/michopa.jpg') }}" width="40" class="rounded-circle" />`
+				// user_image = `<img src="{{ asset('images/gyaru_picture.png') }}" width="40" class="rounded-circle" />`
 			}
 
 			html += `
@@ -303,7 +307,9 @@ conn.onmessage = function(e){
 				}
 				else
 				{
-					user_image = `<img src="{{ asset('images/no-image.jpg') }}" width="35" class="rounded-circle" />`;
+					// user_image = `<img src="{{ asset('images/no-image.jpg') }}" width="40" class="rounded-circle" />`
+					user_image = `<img src="{{ asset('images/michopa.jpg') }}" width="40" class="rounded-circle" />`
+					// user_image = `<img src="{{ asset('images/gyaru_picture.png') }}" width="40" class="rounded-circle" />`
 				}
 
 
