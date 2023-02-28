@@ -1,0 +1,14 @@
+version: "3"
+services:
+  laravel-build: 
+    build:
+      context: .
+    container_name: 'laravel-build'
+    volumes:
+      - "../:/usr/app"
+    working_dir: /usr/app
+    command: >
+      bash -c 'npm install --include=dev &&
+      npm run build &&
+      rm -f ./karaage-build.zip &&
+      zip ./karaage-build.zip -r . .[^.]* -x "vendor/*" -x "karaage-build.zip"' -x ".git"
