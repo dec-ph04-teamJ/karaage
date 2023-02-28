@@ -35,6 +35,23 @@
                 絵文字が少ないです!もっと使いましょう!
               </p>
               @endif
+              <p class="py-2 px-3 text-grey-darkest" id="sentence">
+                @if($result_output["naive_bayes"]==0)
+                部下から上司に対する文章っぽいです！
+                @endif
+                @if($result_output["naive_bayes"]==1)
+                上司から部下に対する文章っぽいです！
+                @endif
+                @if($result_output["naive_bayes"]==2)
+                同僚同士の文章っぽいです！
+                @endif
+                @if($result_output["naive_bayes"]==3)
+                友達同士の文章っぽいです！
+                @endif
+                @if($result_output["naive_bayes"]==4)
+                カップルのラブラブチャットっぽいです！
+                @endif
+              </p>
             </div>
           </div>
         </div>

@@ -47,7 +47,7 @@ def get_feature_value_and_included_keigo(df):
 
 def get_score(df):
   test_x=df[["漢字の割合","絵文字の割合","敬語の割合"]]
-  with open('./app/python/model.pickle','rb') as f:
+  with open('../app/python/model.pickle','rb') as f:
     lr= pickle.load(f)
   y_pred_prob=lr.predict_proba(test_x)
   score=y_pred_prob[0][1]*100

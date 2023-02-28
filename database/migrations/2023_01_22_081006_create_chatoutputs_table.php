@@ -21,6 +21,7 @@ return new class extends Migration
             $table->float("score")->nullable();
             $table->float("kanji_rate")->nullable();
             $table->float("emoji_rate")->nullable();
+            $table->float("naive_bayes")->nullable();
         });
     }
 
