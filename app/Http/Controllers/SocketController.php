@@ -410,6 +410,9 @@ class SocketController extends Controller implements MessageComponentInterface
                 $command = "python3 ".$pythonPath."test.py 2>error.log {$result_input->sentence}";
                 exec($command, $outputs, $return);
 
+                $pythonPath =  "./app/python/";
+                $command = "python3 ".$pythonPath."naive_bayes.py 2>error.log {$result_input->sentence}";
+                exec($command, $outputs2, $return);
 
                 #コマンドを実行
                 $keigo_lis=[];
@@ -431,6 +434,7 @@ class SocketController extends Controller implements MessageComponentInterface
                 $result_output->score=(float) $outputs[0];
                 $result_output->kanji_rate=(float) $outputs[2];
                 $result_output->emoji_rate=(float) $outputs[4];
+                $result_output->naive_bayes=(float) $outputs2[1];
                 $result_output->save();
                                
                 //$send_data[""]=$data->message;

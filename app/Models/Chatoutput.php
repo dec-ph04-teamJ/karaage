@@ -16,6 +16,7 @@ class Chatoutput extends Model
         "input_id",
         "kanji_rate",
         "emoji_rate",
+        "naive_bayes",
     ];
 /*
     public static function Get_Chat_Score_from_Inputid($input_id_lis){

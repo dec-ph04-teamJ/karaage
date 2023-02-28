@@ -18,7 +18,8 @@
                   <tr>
                     <th scope="col" class="px-6 py-3">text</th>
                     <th scope="col" class="px-6 py-3">score</th>
-                    <th scope="col" class="px-6 py-3">defalut point</th>
+                    <th scope="col" class="px-6 py-3"> bad points</th>
+                    <th scope="col" class="px-6 py-3">categorised</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -40,6 +41,23 @@
                         <li>"{{$user_output_keigo->keigo}}"があります。</li>
                         @endforeach
                         </ul>
+                    </td>
+                    <td class="px-6 py-4">
+                      @if($user_outputs[$count]->naive_bayes==0)
+                      部下から上司に対する文章っぽいです！
+                      @endif
+                      @if($user_outputs[$count]->naive_bayes==1)
+                      上司から部下に対する文章っぽいです！
+                      @endif
+                      @if($user_outputs[$count]->naive_bayes==2)
+                      同僚同士の文章っぽいです！
+                      @endif
+                      @if($user_outputs[$count]->naive_bayes==3)
+                      友達同士の文章っぽいです！
+                      @endif
+                      @if($user_outputs[$count]->naive_bayes==4)
+                      カップルのラブラブチャットっぽいです！
+                      @endif
                     </td>
                   </tr>
                   @endfor

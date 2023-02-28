@@ -60,18 +60,17 @@ class ChatInputController extends Controller
             'user_id' => Auth::user()->id,
         );
 
-        
-        #inputテーブルに保存。今入力した人のinput_idを取得
 
-        $pythonPath =  "../app/Python/";
-        $command = "python3 ".$pythonPath."test.py 2>error.log {$request->sentence}";
+        $pythonPath =  "../app/python/";
+        $command = "python3 ".$pythonPath."test_for_check.py 2>error.log {$request->sentence}";
+        // $command = "pwd";
         exec($command, $outputs, $return);
 
         # naive bayes
-        $pythonPath =  "../app/Python/";
+        $pythonPath =  "../app/python/";
         $command = "python3 ".$pythonPath."naive_bayes.py 2>error.log {$request->sentence}";
         exec($command, $outputs_2, $return);
-        dd($outputs_2);
+        // dd($outputs_2);
 
         #コマンドを実行
         $keigo_lis=[];
@@ -92,10 +91,10 @@ class ChatInputController extends Controller
             "score" => (float) $outputs[0],
             'kanji_rate' => (float) $outputs[2],
             'emoji_rate' => (float) $outputs[4],
-            
+            'naive_bayes' => (float) $outputs_2[1],
         );
+        // dd($result_output);
 
-        #outputテーブルに保存。今入力した人のoutput_idを取得
 
 
         
