@@ -462,10 +462,14 @@ class SocketController extends Controller implements MessageComponentInterface
                             "失礼しました"=>"ごめんね😔",
                             "ございます"=>"す",
                             "参上します"=>"行くよん!😆",
+                            "お伺いします"=>"行くよん!😆",
+                            "おうかがいします"=>"行くよん!😆",
                             "お待ちしております"=>"待ってるね!😆",
                             "またのお越しを"=>"また来るの",
                             "失礼いたしました"=>"ごめんね😔",
                             "失礼致しました"=>"ごめんね😔",
+                            "失礼致します"=>"ごめんね😔",
+                            "失礼いたします"=>"ごめんね😔",
                             "申し訳ございません"=>"すまん😰",
                             "お待ちしております"=>"待ってるね!😆",
                             "かしこまりました"=>"分かった!😆",
@@ -478,6 +482,7 @@ class SocketController extends Controller implements MessageComponentInterface
                             "ご教授ください"=>"教えて！😃",
                             "ご教授下さい"=>"教えて！😃",
                             "ご教示下さい"=>"教えて！😃",
+                            "。"=>"!!!!!!"
                             );
 
         $girl_word=$data->message;
@@ -492,8 +497,7 @@ class SocketController extends Controller implements MessageComponentInterface
                 
                 // TODO 1 敬語バリデーションを行って、画面に戻したいメッセージを返す
                 
-                if(false)
-                {
+                if(false){
                     $send_data['user_id'] = $data->to_user_id;
 
                     $send_data['warning'] = "点数が低すぎます";
@@ -509,7 +513,7 @@ class SocketController extends Controller implements MessageComponentInterface
                             $client->send(json_encode($send_data));
                         }
                     }
-                }else{
+                }elseif($result_output->score<42){
                     
                     // TODO 2 文章をギャルっぽく変換
 
@@ -547,8 +551,7 @@ class SocketController extends Controller implements MessageComponentInterface
                                 Post::where('id', $post_message_id)->update(['message_status' =>'Send']);
     
                                 $send_data['message_status'] = 'Send';
-                            }
-                            else
+                            }else
                             {
                                 $send_data['message_status'] = 'Not Send';
                             }
