@@ -61,6 +61,9 @@
 	margin-bottom:16px; 
 	background-color: #ece5dd;
 	padding: 16px;
+	background-image: url(images/gyaru_picture.png);
+	background-position:center center;
+	background-size:cover;
 }
 #warning_box
 {
