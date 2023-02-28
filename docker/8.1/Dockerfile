@@ -22,6 +22,9 @@ RUN pip3 install emoji
 RUN pip3 install mecab-python3
 RUN pip3 install unidic-lite
 RUN pip3 install scikit-learn
+RUN pip3 install keras
+RUN pip3 install tensorflow
+# RUN pip3 install itertools # pythonの標準ライブラリに組み込まれてるらしい
 #ここまで追加した
 
 

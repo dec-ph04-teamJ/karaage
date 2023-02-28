@@ -67,6 +67,12 @@ class ChatInputController extends Controller
         $command = "python3 ".$pythonPath."test.py 2>error.log {$request->sentence}";
         exec($command, $outputs, $return);
 
+        # naive bayes
+        $pythonPath =  "../app/Python/";
+        $command = "python3 ".$pythonPath."naive_bayes.py 2>error.log {$request->sentence}";
+        exec($command, $outputs_2, $return);
+        dd($outputs_2);
+
         #コマンドを実行
         $keigo_lis=[];
         $outputs_keigo=explode("'",$outputs[1]);
@@ -86,6 +92,7 @@ class ChatInputController extends Controller
             "score" => (float) $outputs[0],
             'kanji_rate' => (float) $outputs[2],
             'emoji_rate' => (float) $outputs[4],
+            
         );
 
         #outputテーブルに保存。今入力した人のoutput_idを取得
