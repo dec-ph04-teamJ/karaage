@@ -1,6 +1,60 @@
-# ageage
+## ageage　
 
-TODO write application description
+#### チャット下手な人が上手になるためのチャットアプリ
+
+1. ユーザーとチャットをする。
+2. 文章の点数化を行い、点数が低かったら強制的にギャル語に変換され送信される。
+3. 自分が送ったチャットの問題点を一覧で見れる。
+
+#### 対象
+* 硬い文章を送りがちな上司
+
+#### 機能
+- ユーザー登録
+- ログイン
+- ログアウト
+- チャット
+- 文章の事前チェック
+- 送った文章の結果一覧
+
+## テーブル
+
+##### users
+- id
+- name
+- email
+- password
+- token
+- connection_id
+- user_status
+- user_image
+
+##### chatinputs
+- id
+- user_id
+- sentence
+
+##### chatoutputs
+- id
+- user_id
+- input_id
+- score
+- kanji_rate
+- emoji_rate
+- naive_bayes
+
+##### keigos
+- id
+- output_id
+- keigo
+
+##### posts
+- from_user_id    
+- to_user_id 　　 
+- post_mesage　　 
+- message_status　
+
+
 
 ## Requirements
 
